@@ -25,7 +25,7 @@ namespace CadastroPalestra.Controllers
             return Ok(participantes);
         }
 
-        [HttpPost]
+        [HttpPost, Route("Post")]
         public async Task<IActionResult> Post(Participante participante)
         {
             if (ModelState.IsValid)
@@ -38,7 +38,7 @@ namespace CadastroPalestra.Controllers
             return BadRequest(ModelState);
         }
         
-        [HttpDelete]
+        [HttpDelete, Route("Delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
             var participante = await _context.Participante.FindAsync(id);
