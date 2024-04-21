@@ -3,8 +3,6 @@ using CadastroPalestra.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace CadastroPalestra.Controllers
 {
     [Route("[controller]")]
@@ -23,6 +21,13 @@ namespace CadastroPalestra.Controllers
         {
             var participantes = await _context.Participante.ToListAsync() ?? new List<Participante>();
             return Ok(participantes);
+        }
+
+        [HttpGet, Route("Count")]
+        public async Task<IActionResult> Count()
+        {
+            var participantes = await _context.Participante.ToListAsync() ?? new List<Participante>();
+            return Ok(participantes.Count());
         }
 
         [HttpPost, Route("Post")]
