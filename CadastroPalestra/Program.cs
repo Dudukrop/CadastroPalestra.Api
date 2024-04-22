@@ -8,6 +8,16 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddCors(opt =>
+{
+    opt.AddDefaultPolicy(builder =>
+    {
+        builder.AllowAnyOrigin()
+               .AllowAnyMethod()
+               .AllowAnyHeader();
+    });
+});
+
 var mySqlDesConnection = builder.Configuration["ConnectionStrings:DefaultConnection"];
 var mySqlProdConnection = Environment.GetEnvironmentVariable("DATABASE_URL");
 var mySqlConnection = string.IsNullOrEmpty(mySqlProdConnection) ?
@@ -20,6 +30,8 @@ var app = builder.Build();
 
 app.UseSwagger();
 app.UseSwaggerUI();
+
+app.UseCors();
 
 app.UseHttpsRedirection();
 
