@@ -35,6 +35,12 @@ namespace CadastroPalestra.Controllers
         {
             try
             {
+                if (await ValidarEmailExistente(participante.Email))
+                {
+                    ModelState.AddModelError("exception", "Esse email já está cadastrado, tente outro.");
+                    return BadRequest(ModelState);
+                }
+
                 if (ModelState.IsValid)
                 {
                     _context.Add(participante);
@@ -63,6 +69,12 @@ namespace CadastroPalestra.Controllers
             }
             ModelState.AddModelError("exception", "Id inválido.");
             return BadRequest(ModelState);
+        }
+
+        async Task<bool> ValidarEmailExistente(string email)
+        {
+            var existe = await _context.Participante.AsNoTracking().Where(p => p.Email == email).AnyAsync();
+            return existe;
         }
     }
 }
