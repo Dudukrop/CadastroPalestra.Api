@@ -33,16 +33,24 @@ namespace CadastroPalestra.Controllers
         [HttpPost, Route("Post")]
         public async Task<IActionResult> Post(Participante participante)
         {
-            if (ModelState.IsValid)
+            try
             {
-                _context.Add(participante);
-                await _context.SaveChangesAsync();
-                return Ok(participante);
+                if (ModelState.IsValid)
+                {
+                    _context.Add(participante);
+                    await _context.SaveChangesAsync();
+                    return Ok(participante);
+                }
+                ModelState.AddModelError("exception", "Não foi possível adicionar o participante.");
+                return BadRequest(ModelState);
             }
-            ModelState.AddModelError("Error", "Não foi possível adicionar o participante.");
-            return BadRequest(ModelState);
+            catch
+            {
+                ModelState.AddModelError("exception", "Não foi possível adicionar o participante, Tente Novamente mais tarde.");
+                return BadRequest(ModelState);
+            }
         }
-        
+
         [HttpDelete, Route("Delete/{id}")]
         public async Task<IActionResult> Delete(int id)
         {
@@ -53,7 +61,7 @@ namespace CadastroPalestra.Controllers
                 await _context.SaveChangesAsync();
                 return NoContent();
             }
-            ModelState.AddModelError("Error", "Id inválido.");
+            ModelState.AddModelError("exception", "Id inválido.");
             return BadRequest(ModelState);
         }
     }
