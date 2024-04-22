@@ -14,8 +14,9 @@ namespace CadastroPalestra.Models
         [EmailAddress(ErrorMessage = "Digite um endereço de e-mail válido")]
         public string Email { get; set; } = null!;
         [StringLength(50, ErrorMessage = "O campo de confirmação do email não pode passar de 50 Caracteres")]
-        [Required(ErrorMessage = "O campo de confirmação de email é obrigatório")]
         [Compare("Email", ErrorMessage = "Os campos de e-mail e confirmação de e-mail não correspondem")]
+        [EmailAddress(ErrorMessage = "Digite um endereço de e-mail válido")]
+        [Required(ErrorMessage = "O campo confirmação do email é obrigatório")]
         public string ConfirmacaoEmail { get; set; } = null!;
         [StringLength(11, ErrorMessage = "O campo Telefone não pode passar de 11 Caracteres")]
         [Required(ErrorMessage = "O campo telefone é obrigatório")]
